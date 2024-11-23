@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Video Downloader</title>
+</head>
+<body>
+    {% if download_filename %}
+    <div class="submitted">
+        <h1>Your file has been downloaded.</h1>
+        <a href="{{ url_for('download_file', filename=download_filename) }}" download>
+            Click here to download your {{ download_type }} file
+        </a>
+        <br>
+        <br>
+        <a href="{{ url_for('clear_session') }}">Go back to home</a>
+    </div>
+    {% else %}
+    <form method="POST" class="contact-form">
+        <h2>Enter Link to Download Audio or Video</h2>
+        {{ form.hidden_tag() }}
+        <div class="link-group">
+            {{ form.link(class_="form-input") }}<br>
+        </div>
+        <br><br>
+        <div class="link-group">
+            {{ form.download_video(class_="form-submit video-button") }}
+            {{ form.download_audio(class_="form-submit audio-button") }}
+        </div>
+    </form>
+    {% endif %}
+</body>
+</html>

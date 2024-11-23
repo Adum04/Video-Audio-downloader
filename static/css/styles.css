@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+.contact-form {
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.link-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 1.2rem;
+    color: #cfb53b;
+}
+
+.form-input {
+    width: 95%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-submit {
+    width: 40%;
+    padding: 12px;
+    background-color: #cfb53b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center;
+    position: relative;
+    left: 260px;
+}
+
+.audio-button {
+    background-color: #cfb53b;
+    color: white;
+    margin-right: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    left: 100px;
+}
+
+.video-button {
+    background-color: #4285f4;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    left: 50px;
+}
+
+.audio-button:hover {
+    background-color: #b89f30;
+}
+
+.video-button:hover {
+    background-color: #3367d6;
+}
+
+.submitted {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.submitted a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #cfb53b;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .contact-form {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .form-input, .form-submit, .audio-button, .video-button {
+        width: 95%;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .form-submit {
+        position: static;
+        margin-top: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .submitted a {
+        padding: 8px 16px;
+        font-size: 1rem;
+    }
+
+    .audio-button, .video-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

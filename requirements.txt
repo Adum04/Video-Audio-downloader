@@ -5,11 +5,13 @@ charset-normalizer==3.4.0
 click==8.1.7
 Flask==3.0.3
 Flask-WTF==1.2.2
+gunicorn==23.0.0
 idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==3.0.2
 mutagen==1.47.0
+packaging==24.2
 pycryptodomex==3.21.0
 requests==2.32.3
 urllib3==2.2.3

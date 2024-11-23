@@ -110,7 +110,7 @@ def download_video(url):
         "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "outtmpl": filepath,
         "merge_output_format": "mp4",
-        "cookies": "cookies/cookies.txt",
+        "cookies": "path_to_cookies/cookies.txt",
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:

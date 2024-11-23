@@ -14,15 +14,15 @@ from wtforms.validators import DataRequired
 import yt_dlp
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "Adum1234567890"  # Replace with a strong secret key
-app.config["UPLOAD_FOLDER"] = "downloads"  # Store downloads within your app
+app.config["SECRET_KEY"] = "Adum1234567890" 
+app.config["UPLOAD_FOLDER"] = "downloads"  
 app.permanent_session_lifetime = timedelta(seconds=29)
-os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)  # Create downloads folder
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)  
 
 
 class Myform(FlaskForm):
     link = StringField("Link", validators=[DataRequired()])
-    download_video = SubmitField("Download Video")  # Button for video
+    download_video = SubmitField("Download Video") 
     download_audio = SubmitField("Download Audio")
 
 
@@ -31,9 +31,8 @@ class Myform(FlaskForm):
 def home():
     form = Myform()
     download_filename = None
-    download_type = None  # Track the type (audio or video)
-
-    # Check if a filename exists in the session
+    download_type = None 
+    
     if "download_filename" in session:
         download_filename = session["download_filename"]
         download_type = session["download_type"]
@@ -43,14 +42,14 @@ def home():
     if form.validate_on_submit():
         url = form.link.data
         try:
-            if form.download_video.data:  # If video download button is clicked
+            if form.download_video.data: 
                 download_filename = download_video(url)
                 download_type = "video"
-            elif form.download_audio.data:  # If audio download button is clicked
+            elif form.download_audio.data:  
                 download_filename = download_audio(url)
                 download_type = "audio"
 
-            # Store filename and type in session
+
             session["download_filename"] = download_filename
             session["download_type"] = download_type
         except Exception as e:
@@ -73,10 +72,10 @@ def home():
 
 def download_audio(url):
     ydl_opts = {
-        "format": "bestaudio/best",  # Download best audio quality
+        "format": "bestaudio/best", 
         "outtmpl": os.path.join(
             app.config["UPLOAD_FOLDER"], "%(title)s.%(ext)s"
-        ),  # Correct output path
+        ), 
         "postprocessors": [
             {
                 "key": "FFmpegExtractAudio",
@@ -85,36 +84,36 @@ def download_audio(url):
             }
         ],
         "postprocessor_args": ["-ar", "44100"],
-        "ffmpeg_location": "/opt/homebrew/bin/ffmpeg",  # Path to FFmpeg
-        "noplaylist": True,  # Only process a single video
-        "verbose": True,  # Enable verbose logging for debugging
+        "ffmpeg_location": "/opt/homebrew/bin/ffmpeg",  
+        "noplaylist": True, 
+        "verbose": True,  
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
-            info_dict = ydl.extract_info(url, download=True)  # Extract and download
-            downloaded_file = ydl.prepare_filename(info_dict)  # Get resolved filename
+            info_dict = ydl.extract_info(url, download=True)  
+            downloaded_file = ydl.prepare_filename(info_dict) 
             print(f"Resolved file path: {downloaded_file}")
 
-            # Ensure file extension is updated to .mp3 after postprocessing
+
             downloaded_file = downloaded_file.replace(".webm", ".mp3").replace(
                 ".m4a", ".mp3"
             )
-            return os.path.basename(downloaded_file)  # Return filename only
+            return os.path.basename(downloaded_file)  
         except Exception as e:
             print(f"Error during download: {e}")
             raise e
 
 
 def download_video(url):
-    # Generate a consistent and valid filename
+
     filename = f"{url.split('/')[-1].split('?')[0]}.mp4"
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 
     ydl_opts = {
         "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
-        "outtmpl": filepath,  # Ensure the full path includes desired filename
-        "merge_output_format": "mp4",  # Force output format to MP4
+        "outtmpl": filepath, 
+        "merge_output_format": "mp4", 
         "cookies": "cookies.txt",
     }
 

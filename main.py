@@ -14,7 +14,7 @@ from wtforms.validators import DataRequired
 import yt_dlp
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "Adum1234567890"
+app.config["SECRET_KEY"] = "Add secret key"
 app.config["UPLOAD_FOLDER"] = "downloads"
 app.permanent_session_lifetime = timedelta(seconds=29)
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)

@@ -103,14 +103,29 @@ def download_audio(url):
 
 def download_video(url):
 
-    filename = f"{url.split('/')[-1].split('?')[0]}.mp4"
+    # Construct a safe filename from the video title instead of URL
+    ydl_opts_info = {
+        "quiet": True,
+        "skip_download": True,
+    }
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts_info) as ydl:
+            info_dict = ydl.extract_info(url, download=False)
+            video_title = info_dict.get("title", "video")
+            # Replace unsafe characters in title for filename
+            safe_title = "".join(x for x in video_title if x.isalnum() or x in "._- ")
+            filename = f"{safe_title}.mp4"
+    except Exception as e:
+        print(f"Error extracting video info: {e}")
+        filename = f"{url.split('/')[-1].split('?')[0]}.mp4"
+
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 
     ydl_opts = {
         "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "outtmpl": filepath,
         "merge_output_format": "mp4",
-        "cookies": "path_to_your_cookies/cookies.txt",
+        # Removed cookies option as per user confirmation
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -119,7 +134,7 @@ def download_video(url):
             print(f"Download completed: {filename}")
             return filename
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An error occurred during video download: {e}")
             raise e
 
 
